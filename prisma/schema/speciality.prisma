@@ -12,4 +12,19 @@ model Speciality {
   @@index([isDeleted], name: "idx_speciality_is_deleted")
   @@index([title], name: "idx_speciality_title")
   @@map("specialities")
+  doctorSpecialities DoctorSpeciality[]
+}
+
+
+model DoctorSpeciality {
+  id           String     @id @default(uuid())
+  doctorId     String
+  specialityId String
+  doctor       Doctor     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  speciality   Speciality @relation(fields: [specialityId], references: [id], onDelete: Cascade)
+
+  @@unique([doctorId, specialityId])
+  @@index([doctorId], name: "idx_doctor_speciality_doctor_id")
+  @@index([specialityId], name: "idx_doctor_speciality_speciality_id")
+  @@map("doctor_specialities")
 }

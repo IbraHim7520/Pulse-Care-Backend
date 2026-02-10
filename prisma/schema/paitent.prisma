@@ -1,5 +1,5 @@
 model Paitent {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
   name      String
   email     String   @unique
   profilePhoto String?
