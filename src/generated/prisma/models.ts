@@ -8,5 +8,12 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/User'
+export type * from './models/Session'
+export type * from './models/Account'
+export type * from './models/Verification'
+export type * from './models/Doctor'
+export type * from './models/Paitent'
 export type * from './models/Speciality'
+export type * from './models/DoctorSpeciality'
 export type * from './commonInputTypes'

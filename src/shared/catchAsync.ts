@@ -5,12 +5,14 @@ const catchAsync = (fn : RequestHandler) =>{
         try {
             await fn(req , res , next)
         } catch (error) {
-            console.log(error )
-            return res.status(500).send({
-                success : false,
-                message : "Failed!!",
-                error
-            })
+
+            next(error)
+            // console.log(error )
+            // return res.status(500).send({
+            //     success : false,
+            //     message : "Failed!!",
+            //     error
+            // })
         }
     }
 }
