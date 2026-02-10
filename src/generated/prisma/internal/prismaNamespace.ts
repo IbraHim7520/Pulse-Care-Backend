@@ -388,6 +388,7 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  Paitent: 'Paitent',
   Speciality: 'Speciality'
 } as const
 
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "speciality"
+    modelProps: "user" | "session" | "account" | "verification" | "paitent" | "speciality"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -704,6 +705,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Paitent: {
+      payload: Prisma.$PaitentPayload<ExtArgs>
+      fields: Prisma.PaitentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaitentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaitentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>
+        }
+        findFirst: {
+          args: Prisma.PaitentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaitentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>
+        }
+        findMany: {
+          args: Prisma.PaitentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>[]
+        }
+        create: {
+          args: Prisma.PaitentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>
+        }
+        createMany: {
+          args: Prisma.PaitentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaitentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>[]
+        }
+        delete: {
+          args: Prisma.PaitentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>
+        }
+        update: {
+          args: Prisma.PaitentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaitentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaitentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaitentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaitentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaitentPayload>
+        }
+        aggregate: {
+          args: Prisma.PaitentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePaitent>
+        }
+        groupBy: {
+          args: Prisma.PaitentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaitentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaitentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaitentCountAggregateOutputType> | number
+        }
+      }
+    }
     Speciality: {
       payload: Prisma.$SpecialityPayload<ExtArgs>
       fields: Prisma.SpecialityFieldRefs
@@ -880,6 +955,23 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const PaitentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  profilePhoto: 'profilePhoto',
+  contactNumber: 'contactNumber',
+  address: 'address',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type PaitentScalarFieldEnum = (typeof PaitentScalarFieldEnum)[keyof typeof PaitentScalarFieldEnum]
+
+
 export const SpecialityScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -1000,6 +1092,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1099,6 +1205,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  paitent?: Prisma.PaitentOmit
   speciality?: Prisma.SpecialityOmit
 }
 
