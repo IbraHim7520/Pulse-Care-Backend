@@ -20,18 +20,18 @@ interface ICreateDoctor {
         currentWorkingPlace: string,
         designation: string
     }
-    specalities: string[] 
+    specalities: string[]
 }
 
 const createDoctor = async (data: ICreateDoctor) => {
-    const specalities : Speciality[] = [];
+    const specalities: Speciality[] = [];
     for (const specialityId of data.specalities) {
         const speciality = await prisma.speciality.findUnique({
-            where:{
+            where: {
                 id: specialityId
             }
         })
-        if(!speciality){
+        if (!speciality) {
             throw new Error(`Speciality with id ${specialityId} not found`)
         }
         specalities.push(speciality)
@@ -42,8 +42,8 @@ const createDoctor = async (data: ICreateDoctor) => {
             email: data.doctror.email
         }
     })
-    if(!isUserExist){
-        throw new Error(`User with email ${data.doctror.email} not found!!`)
+    if (isUserExist) {
+        throw new Error(`User with email ${data.doctror.email} already exists!!`)
     }
 
     const userData = {
@@ -58,14 +58,14 @@ const createDoctor = async (data: ICreateDoctor) => {
     })
 
     try {
-        const result = await prisma.$transaction(async(tx)=>{
+        const result = await prisma.$transaction(async (tx) => {
             const newDoctor = await tx.doctor.create({
-                data:{
+                data: {
                     userId: Doctoruser.user.id,
                     ...data.doctror
                 }
             })
-            const doctorSpecialities = specalities.map((sp)=>{
+            const doctorSpecialities = specalities.map((sp) => {
                 return {
                     doctorId: newDoctor.id,
                     specialityId: sp.id
@@ -96,8 +96,8 @@ const createDoctor = async (data: ICreateDoctor) => {
                     designation: true,
                     createdAt: true,
                     updatedAt: true,
-                    user:{
-                        select:{
+                    user: {
+                        select: {
                             id: true,
                             email: true,
                             name: true,
@@ -110,8 +110,8 @@ const createDoctor = async (data: ICreateDoctor) => {
                         }
                     },
                     specialities: {
-                        select:{
-                            speciality:{
+                        select: {
+                            speciality: {
                                 select: {
                                     title: true,
                                     id: true
@@ -123,7 +123,7 @@ const createDoctor = async (data: ICreateDoctor) => {
             })
 
             return doctor;
-            
+
         })
         return result;
     } catch (error) {
