@@ -2,6 +2,7 @@ import { email } from "better-auth";
 import { auth } from "../../lib/auth";
 import { UserStatus } from "../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
+import { tokenUtilts } from "../../utils/token";
 
 interface IRegisterPaitent {
     name: string,
@@ -12,12 +13,12 @@ interface IRegisterPaitent {
 const registerPaitent = async (payload: IRegisterPaitent) => {
     const { name, email, password } = payload;
     const newUser = await auth.api.signUpEmail({
-            body: {
-                name,
-                email,
-                password,
-            }
-        })
+        body: {
+            name,
+            email,
+            password,
+        }
+    })
     if (!newUser.user) {
         throw new Error("Failed to register paitent!")
     }
@@ -34,17 +35,45 @@ const registerPaitent = async (payload: IRegisterPaitent) => {
             })
             return newPaitent;
         })
+
+
+        const accessToken = tokenUtilts.getAccessToken({
+            userId: newUser.user.id,
+            email: newUser.user.email,
+            name: newUser.user.name,
+            role: newUser.user.role,
+            status: newUser.user.status,
+            isDeleted: newUser.user.isDeleted,
+            emailVerified: newUser.user.emailVerified
+
+        })
+
+        const refreshToken = tokenUtilts.getRefreshToken({
+            userId: newUser.user.id,
+            email: newUser.user.email,
+            name: newUser.user.name,
+            role: newUser.user.role,
+            status: newUser.user.status,
+            isDeleted: newUser.user.isDeleted,
+            emailVerified: newUser.user.emailVerified
+        })
+
+
         return {
             ...newUser,
-            paitentProfile: paintent
+            accessToken,
+            refreshToken,
+            token: newUser.token, // explicitly include it
+            paintent
         };
-    } catch (error) {
+    } catch (error:any) {
+        console.log(error)
         await prisma.user.delete({
-            where:{
+            where: {
                 id: newUser.user.id
             }
         })
-        return error
+        throw new Error(error)
     }
 }
 
@@ -70,7 +99,33 @@ const loginUser = async (payload: ILoggedInUser) => {
         throw new Error("User is not exists")
     }
 
-    return loggedIn
+    const accessToken = tokenUtilts.getAccessToken({
+        userId: loggedIn.user.id,
+        email: loggedIn.user.email,
+        name: loggedIn.user.name,
+        role: loggedIn.user.role,
+        status: loggedIn.user.status,
+        isDeleted: loggedIn.user.isDeleted,
+        emailVerified: loggedIn.user.emailVerified
+
+    })
+
+    const refreshToken = tokenUtilts.getRefreshToken({
+        userId: loggedIn.user.id,
+        email: loggedIn.user.email,
+        name: loggedIn.user.name,
+        role: loggedIn.user.role,
+        status: loggedIn.user.status,
+        isDeleted: loggedIn.user.isDeleted,
+        emailVerified: loggedIn.user.emailVerified
+    })
+
+    return {
+        accessToken,
+        refreshToken,
+        ...loggedIn
+    }
+
 }
 
 
