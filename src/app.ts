@@ -3,13 +3,13 @@ import specialityRoute from './Models/Speciality/specality.route';
 import authRouter from './Models/Authentication/auth.route';
 import { globalErrorHandler } from './middlewere/globalError';
 import notFound from './middlewere/notFound';
+import cookieParser from 'cookie-parser'
 import userRouter from './Models/User/user.route';
 const app:Application = express();
 
 //------MiddleWere's---------------
 app.use(express.json())
-
-
+app.use(cookieParser())
 //*--------Routes------------//
 
 //?---------Speciality Router
