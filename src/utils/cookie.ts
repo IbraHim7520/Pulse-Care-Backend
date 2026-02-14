@@ -6,7 +6,7 @@ const setCookie = (res:Response , key:string , value:string , options : CookieOp
 
 
 const getCookie = (req: Request , key:string)=>{
-    return req.cookies(key);
+    return req.cookies?.[key];
 }
 
 

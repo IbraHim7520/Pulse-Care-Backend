@@ -107,3 +107,14 @@ export const updateDoctorSchema = z.object({
       .min(3, "Designation must be at least 3 characters"),
 
 }).partial()
+
+
+export const createAdminSchema = z.object({
+    password: z.string("Password is required").min(6, "Password must be 6 charecter long").max(16, "Password can't more then 16 charecter"),
+  adminData: z.object({
+    name: z.string("Name is required").max(20 , "Name can be maximum 20 charecter long!"),
+    email: z.string("a valid email is required!").email("Invalid Email!"),
+    image: z.string().optional()
+  })
+
+})
