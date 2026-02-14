@@ -3,6 +3,7 @@ import { userController } from "./user.controller";
 import doctorRoute from "./Doctors/doctor.route";
 import zodVlidations from "../../middlewere/zodValidations";
 import { createDoctorSchema } from "../../ZodSchema/zodUserSchema";
+import adminRoute from "./Admin/admin.route";
 
 const userRouter = Router();
 
@@ -14,5 +15,6 @@ userRouter.post('/create-doctor', zodVlidations(createDoctorSchema) , userContro
 
 
 userRouter.use('/doctors', doctorRoute)
+userRouter.use('/admin', adminRoute)
 
 export default userRouter;

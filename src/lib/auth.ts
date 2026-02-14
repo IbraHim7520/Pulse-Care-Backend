@@ -11,10 +11,6 @@ export const auth = betterAuth({
   emailAndPassword:{
     enabled:true
   },
-  session: {
-  expiresIn: 3*24**60*60*1000,
-  updateAge: 3*24*60*60*1000,
-},
   user: {
     additionalFields: {
       role: {

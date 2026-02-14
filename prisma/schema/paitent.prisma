@@ -17,4 +17,9 @@ model Paitent {
   @@index([isDeleted], name: "idx_paitent_isDeleted")
   @@map("paitent")
 
+  appointments Appointment[]
+  medicalReports MedicalReport[]
+  paitentHealthDatas PaitentHealthData?
+  prescriptions Prescription[]
+  reviews Review[]
 }
