@@ -10,6 +10,10 @@ interface EnvConfig {
     BETTER_AUTH_URL: string,
     ACCESS_TOKEN_SECRET:string,
     REFRESH_TOKEN_SECRET:string,
+    G_CLIENT_ID:string,
+    G_CLIENT_SECRET:string,
+    FRONTEND_URL:string,
+    G_CALLBACK_URL:string
 
 }
 
@@ -21,7 +25,11 @@ const env: EnvConfig = {
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL as string,
 
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET as string,
-    REFRESH_TOKEN_SECRET : process.env.REFRESH_TOKEN_SECRET as string
+    REFRESH_TOKEN_SECRET : process.env.REFRESH_TOKEN_SECRET as string,
+    G_CLIENT_ID:process.env.G_CLIENT_ID as string,
+    G_CLIENT_SECRET:process.env.G_CLIENT_SECRET as string,
+    FRONTEND_URL:process.env.FRONTEND_URL as string,
+    G_CALLBACK_URL:process.env.G_CALLBACK_URL as string
 }
 
 export default env

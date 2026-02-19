@@ -11,7 +11,16 @@ const createDoctorController = catchAsync(async(req:Request , res:Response )=>{
         data: doctorCreateResult
     })
 })
-
+const getMeControle = catchAsync(async(req:Request , res:Response)=>{
+    const userId = req.user.userId;
+    const profileData = await UserService.getMyProfile(userId as string)
+    res.status(200).send({
+        success: true,
+        message: "Profile retrived successfully",
+        data: profileData
+    })
+})
 export const userController = {
-    createDoctorController
+    createDoctorController,
+    getMeControle
 }

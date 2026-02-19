@@ -3,6 +3,8 @@ import { Speciality } from "../../generated/prisma/client"
 import { Gender, Role } from "../../generated/prisma/enums"
 import { prisma } from "../../lib/prisma"
 import { auth } from "../../lib/auth"
+import AppError from "../../shared/AppError"
+import status from "http-status"
 
 interface ICreateDoctor {
     password: string,
@@ -136,6 +138,39 @@ const createDoctor = async (data: ICreateDoctor) => {
     }
 }
 
+
+const getMyProfile = async(userId: string)=>{
+    const isUser = await prisma.user.findUnique({
+        where:{
+            id: userId
+        },
+        include:{
+            paitent:{
+                include:{
+                    appointments:true,
+                    prescriptions:true,
+                    reviews:true,
+                    medicalReports: true,
+                    paitentHealthDatas:true
+                }
+            },
+            doctor:{
+                include:{
+                    specialities: true,
+                    appointments:true,
+                    reviews:true,
+                    prescriptions:true
+                }
+            },
+            admins:true
+        }
+    })
+    if(!isUser) throw new AppError(status.NOT_FOUND , "This user is not exists!!");
+
+    return isUser;
+}
+
 export const UserService = {
-    createDoctor
+    createDoctor,
+    getMyProfile
 }

@@ -5,7 +5,15 @@ import { globalErrorHandler } from './middlewere/globalError';
 import notFound from './middlewere/notFound';
 import cookieParser from 'cookie-parser'
 import userRouter from './Models/User/user.route';
+import { toNodeHandler } from 'better-auth/node';
+import { auth } from './lib/auth';
+import path from 'path';
 const app:Application = express();
+
+app.use('/api/auth', toNodeHandler(auth))
+
+app.set('view engine', 'ejs');
+app.set('views', path.resolve(process.cwd(), 'src/Templates'));
 
 //------MiddleWere's---------------
 app.use(express.json())

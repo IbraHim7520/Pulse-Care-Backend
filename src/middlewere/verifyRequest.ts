@@ -9,18 +9,7 @@ import AppError from "../shared/AppError";
 import env from "../configs/env";
 import { JwtPayload } from "jsonwebtoken";
 
-declare global {
-    namespace Express {
-        interface UserPayload {
-            userId:string,
-            email:string,
-            role:string
-        }
-        interface Request {
-            user? : UserPayload
-        }
-    }
-}
+
 
 export const verifyRequest = (...authRoles: Role[]) => async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -110,6 +99,7 @@ export const verifyRequest = (...authRoles: Role[]) => async (req: Request, res:
         }
 
         next()
+        
     } catch (error: any) {
         next(error);
     }
